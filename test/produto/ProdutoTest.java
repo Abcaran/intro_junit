@@ -1,17 +1,19 @@
 package produto;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;;
+
 
 public class ProdutoTest {
 	
@@ -19,31 +21,47 @@ public class ProdutoTest {
 	
 	@BeforeEach
 	public void inicializa() {
-		livro = new Produto("Introdução ao Teste de Software", 100.00);
+		livro = new Produto("Introduï¿½ï¿½o ao Teste de Software", 100.00);
 	}
 	
+	@DisplayName("Teste criaÃ§Ã£o de instÃ¢ncia de produto")
 	@Test
 	public void testCriaProduto() {
 		Assertions.assertAll("livro",
-				() -> assertEquals("Introdução ao Teste de Software", livro.getNome()),
+				() -> assertEquals("Introduï¿½ï¿½o ao Teste de Software", livro.getNome()),
 				() -> assertTrue(100.00 == livro.getPreco())						
 				);
 	}
 	
+	@DisplayName("Teste produtos iguais")
 	@Test
 	public void testProdutosIguais() {
-		Produto livro2 = new Produto("Introdução ao Teste de Software", 90.00);
-		
+		Produto livro2 = new Produto("Introduï¿½ï¿½o ao Teste de Software", 90.00);
 		assertNotSame(livro, livro2);
-		
+		assertTrue(livro.equals(livro2));
 	}
 	
+	@DisplayName("Testa atualizaÃ§Ã£o nome do livro")
 	@Test
-	public void assertionComHamcrestMatcher() {
-		assertThat(livro.getPreco(), equalTo(100.00));
-		assertThat(livro.getNome(), notNullValue());
-		assertThat(livro.getNome(), containsString("Teste"));
-		assertThat(livro, instanceOf(Produto.class));
+	public void testAtualizacaoNome() {
+		String nomeProduto = "AtualizaÃ§Ã£o de nome de Teste de Software";
+		livro.setNome(nomeProduto);
+		assertEquals(nomeProduto, livro.getNome());
+	}
+	
+	@DisplayName("Testa atualizaÃ§Ã£o do preÃ§o do livro")
+	@Test
+	public void testAtualizacaoPreco() {
+		float precoProduto = (float) 75.50;
+		livro.setPreco(precoProduto);
+		assertEquals(precoProduto, livro.getPreco());
 	}
 
+//	@Test
+//	public void assertionComHamcrestMatcher() {
+//		assertThat(livro.getPreco(), equalTo(100.00));
+//		assertThat(livro.getNome(), notNullValue());
+//		assertThat(livro.getNome(), containsString("Teste"));
+//		assertThat(livro, instanceOf(Produto.class));
+//	}
 }
